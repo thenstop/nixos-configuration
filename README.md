@@ -1,6 +1,6 @@
 # My Personal NixOS Configuration
 
-[Screenshot](screenshot.png)
+![Screenshot](screenshot.png)
 
 This is my configuration for NixOS. It works well for me and you can change anything you like for your own needs. Its free software so that is encouraged! :^)
 
