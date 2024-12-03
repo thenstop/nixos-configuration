@@ -4,21 +4,21 @@
   imports =
     [
       ./hardware-configuration.nix
-      ./network.nix
       ./gnome.nix
       ./gaming.nix
       ./nvidia.nix
+      ./zram.nix
     ];
 
   # Bootloader configuration
   boot.loader.grub.enable = true;
   boot.loader.grub.device = "/dev/sda";
   boot.loader.grub.useOSProber = false;
-  boot.kernelParams = [ "loglevel=4" ]; # put your preferred kernel parameters here 
-  boot.kernelPackages = pkgs.linuxPackages_zen;
+  boot.kernelPackages = pkgs.linuxPackages_latest;
+  boot.kernelParams = [ "loglevel=4" "mitigations=off" "split_lock_detect=off" "kernel.split_lock_mitigate=0" "intel_pstate=support_acpi_ppc" "vm.vfs_cache_pressure=1" ];
 
   # Network configuration
-  networking.hostName = "nixos-computer";
+  networking.hostName = "basedoptiplex";
   networking.networkmanager.enable = true;
 
   # Locale properties configuration
@@ -38,38 +38,39 @@
 
   # Services configuration
   services.flatpak.enable = true;
-  services.printing.enable = true;
-  services.openssh.enable = true;
+
+  services.printing.enable = false;
+  services.openssh.enable = false;
 
   hardware.pulseaudio.enable = false;
   security.rtkit.enable = true;
 
   services.pipewire = {
     enable = true;
-    alsa.enable = true;
-    alsa.support32Bit = true;
     pulse.enable = true;
+    alsa.enable = false;
+    alsa.support32Bit = false;
   };
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
   # My user account
-  users.users.username = { # change username
+  users.users.username = {
     isNormalUser = true;
-    description = "username"; # change username
+    description = "username";
     extraGroups = [ "networkmanager" "wheel" ];
     packages = with pkgs; [
       flatpak
+      firefox
+      nvidia-vaapi-driver
     ];
   };
 
-  # Installed packages 
-  environment.systemPackages = with pkgs; [
-    firefox
-    nvidia-vaapi-driver
-  ];
+  system.autoUpgrade.enable  = true;
+  system.autoUpgrade.allowReboot  = true;
+  system.autoUpgrade.channel  = https://nixos.org/channels/nixos-24.11;
 
-  # Keep as the version you installed (doesn't change the system version as its rolling release)
-  system.stateVersion = "24.11";
+  # Keep default
+  system.stateVersion = "24.05";
 }

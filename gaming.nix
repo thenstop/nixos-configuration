@@ -26,27 +26,18 @@
     };
   };
 
-  # Force flat mouse acceleration - good for FPS games, remove this whole code block if on laptop
+  # Kernel parameters for low internet latency
   environment.etc = {
-    "X11/xorg.conf.d/00-mouse.conf" = {
+    "sysctl.d/69-networking.conf" = {
       text = ''
-        Section "InputClass"
-                Identifier "libinput pointer catchall"
-                MatchIsPointer "on"
-                MatchDevicePath "/dev/input/event*"
-                Driver "libinput"
-                Option "AccelProfile" "flat"
-        EndSection
+        net.core.default_qdisc = cake
+        net.ipv4.tcp_congestion_control = bbr
       '';
     };
   };
 
-  # Set keyboard polling rate, does nothing on 99% of laptops because they use ps/2 for the keyboard, might want to disable if your laptop uses USB
-  environment.etc = {
-    "modprobe.d/keyboard.conf" = {
-      text = ''
-        options usbhid kbpoll 8
-      '';
-    };
-  };
+  # Load TCP_BBR module
+  boot.kernelModules = [
+    "tcp_bbr"
+  ];  
 }
