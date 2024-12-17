@@ -15,8 +15,6 @@
   environment.systemPackages = with pkgs; [ 
     gnomeExtensions.dash-to-dock
     gnomeExtensions.unite
-    gnomeExtensions.zen
-    gnome-browser-connector
     yaru-theme
   ];
 
