@@ -6,7 +6,7 @@
       ./hardware-configuration.nix
       ./gnome.nix
       ./gaming.nix
-      ./nvidia.nix
+      ./amd.nix
       ./zram.nix
     ];
 
@@ -15,7 +15,7 @@
   boot.loader.grub.device = "/dev/sda";
   boot.loader.grub.useOSProber = false;
   boot.kernelPackages = pkgs.linuxPackages_latest;
-  boot.kernelParams = [ "loglevel=4" "mitigations=off" "split_lock_detect=off" "kernel.split_lock_mitigate=0" "intel_pstate=support_acpi_ppc" "vm.vfs_cache_pressure=1" ];
+  boot.kernelParams = [ "loglevel=4" "mitigations=off" "split_lock_detect=off" "kernel.split_lock_mitigate=0" "intel_pstate=support_acpi_ppc" "vm.vfs_cache_pressure=50" ];
 
   # Network configuration
   networking.hostName = "basedoptiplex";
@@ -25,15 +25,7 @@
   time.timeZone = "America/New_York";
   i18n.defaultLocale = "en_US.UTF-8";
   i18n.extraLocaleSettings = {
-    LC_ADDRESS = "en_US.UTF-8";
-    LC_IDENTIFICATION = "en_US.UTF-8";
-    LC_MEASUREMENT = "en_US.UTF-8";
-    LC_MONETARY = "en_US.UTF-8";
-    LC_NAME = "en_US.UTF-8";
-    LC_NUMERIC = "en_US.UTF-8";
-    LC_PAPER = "en_US.UTF-8";
-    LC_TELEPHONE = "en_US.UTF-8";
-    LC_TIME = "en_US.UTF-8";
+    LC_ALL = "en_US.UTF-8";
   };
 
   # Services configuration
@@ -43,7 +35,6 @@
   services.openssh.enable = false;
 
   hardware.pulseaudio.enable = false;
-  security.rtkit.enable = true;
 
   services.pipewire = {
     enable = true;
@@ -63,14 +54,13 @@
     packages = with pkgs; [
       flatpak
       firefox
-      nvidia-vaapi-driver
     ];
   };
 
   system.autoUpgrade.enable  = true;
-  system.autoUpgrade.allowReboot  = true;
+  system.autoUpgrade.allowReboot  = false;
   system.autoUpgrade.channel  = https://nixos.org/channels/nixos-24.11;
 
   # Keep default
-  system.stateVersion = "24.05";
+  system.stateVersion = "24.11";
 }
