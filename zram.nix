@@ -1,4 +1,4 @@
-{ config, pkgs, lib, input,... }:
+{ config, pkgs, ... }:
 
 {
   services.fstrim.enable = true;
