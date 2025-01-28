@@ -28,7 +28,7 @@
 
   # Kernel parameters for low internet latency
   environment.etc = {
-    "sysctl.d/69-networking.conf" = {
+    "sysctl.d/99-networking.conf" = {
       text = ''
         net.core.default_qdisc = cake
         net.ipv4.tcp_congestion_control = bbr
