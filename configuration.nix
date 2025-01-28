@@ -3,8 +3,7 @@
 {
   imports =
     [
-      ./hardware-configuration.nix
-      ./gnome.nix
+      ./lomiri.nix
       ./gaming.nix
       ./zram.nix
     ];
