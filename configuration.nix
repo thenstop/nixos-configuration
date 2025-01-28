@@ -6,7 +6,6 @@
       ./hardware-configuration.nix
       ./gnome.nix
       ./gaming.nix
-      ./amd.nix
       ./zram.nix
     ];
 
@@ -15,16 +14,17 @@
   boot.loader.grub.device = "/dev/sda";
   boot.loader.grub.useOSProber = false;
   boot.kernelPackages = pkgs.linuxPackages_latest;
-  boot.kernelParams = [ "loglevel=4" "mitigations=off" "split_lock_detect=off" "kernel.split_lock_mitigate=0" "intel_pstate=support_acpi_ppc" "vm.vfs_cache_pressure=50" ];
+  boot.kernelParams = [ "loglevel=4" "mitigations=off" "split_lock_detect=off" "kernel.split_lock_mitigate=0" "intel_pstate=support_acpi_ppc" "vm.vfs_cache_pressure=1" ];
 
   # Network configuration
-  networking.hostName = "basedoptiplex";
+  networking.hostName = "basedpc";
   networking.networkmanager.enable = true;
 
   # Locale properties configuration
   time.timeZone = "America/New_York";
   i18n.defaultLocale = "en_US.UTF-8";
   i18n.extraLocaleSettings = {
+    LANG = "en_US.UTF-8";
     LC_ALL = "en_US.UTF-8";
   };
 
@@ -39,12 +39,9 @@
   services.pipewire = {
     enable = true;
     pulse.enable = true;
-    alsa.enable = false;
-    alsa.support32Bit = false;
+    alsa.enable = true;
+    alsa.support32Bit = true;
   };
-
-  # Allow unfree packages
-  nixpkgs.config.allowUnfree = true;
 
   # My user account
   users.users.username = {
@@ -53,7 +50,6 @@
     extraGroups = [ "networkmanager" "wheel" ];
     packages = with pkgs; [
       flatpak
-      firefox
     ];
   };
 
