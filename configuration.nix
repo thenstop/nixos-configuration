@@ -4,20 +4,19 @@
   imports =
     [
       ./hardware-configuration.nix
-      ./lomiri.nix
+      ./gnome.nix
       ./gaming.nix
-      ./zram.nix
+      ./amd.nix
     ];
 
   # Bootloader configuration
   boot.loader.grub.enable = true;
-  boot.loader.grub.device = "/dev/sda";
+  boot.loader.grub.device = "/dev/nvme0n1";
   boot.loader.grub.useOSProber = false;
   boot.kernelPackages = pkgs.linuxPackages_latest;
-  boot.kernelParams = [ "loglevel=4" "mitigations=off" "split_lock_detect=off" "kernel.split_lock_mitigate=0" "intel_pstate=support_acpi_ppc" "vm.vfs_cache_pressure=1" ];
 
   # Network configuration
-  networking.hostName = "basedpc";
+  networking.hostName = "basedb850m";
   networking.networkmanager.enable = true;
 
   # Locale properties configuration
@@ -44,9 +43,9 @@
   };
 
   # My user account
-  users.users.username = {
+  users.users.thenstop = {
     isNormalUser = true;
-    description = "username";
+    description = "thenstop";
     extraGroups = [ "networkmanager" "wheel" ];
     packages = with pkgs; [
       flatpak
@@ -55,8 +54,8 @@
 
   system.autoUpgrade.enable  = true;
   system.autoUpgrade.allowReboot  = false;
-  system.autoUpgrade.channel  = https://nixos.org/channels/nixos-24.11;
+  system.autoUpgrade.channel  = https://nixos.org/channels/nixos-25.05;
 
   # Keep default
-  system.stateVersion = "24.11";
+  system.stateVersion = "25.05";
 }
