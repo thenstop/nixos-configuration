@@ -7,7 +7,6 @@
       ./hardware-configuration.nix
       ./cloudflared.nix
       ./nix-modules.nix
-      ./nix-gaming.nix
       ./plasma.nix
       ./gaming.nix
       ./amd.nix

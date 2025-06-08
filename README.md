@@ -14,7 +14,7 @@ This is my configuration for NixOS. It works well for me but you can change anyt
 - [gaming.nix](gaming.nix) - `/etc/nixos/gaming.nix` - Gaming Configuration file: handles sysctl values and other QOL improvements for a smooth gaming experience
 - [plasma.nix](plasma.nix) - `/etc/nixos/plasma.nix` - KDE Plasma 6 Configuration file: removes bloat and makes sddm use wayland
 - [flake.nix](flake.nix) - `/etc/nixos/flake.nix` - Flake Configuration file: flakes (Flake) (Flakes) Flake
-- [nix-gaming.nix](nix-gaming.nix) - `/etc/nixos/nix-gaming.nix` - Nix-Gaming Configuration file: enables the nix gaming repo for realtime pipewire
+- [nix-modules.nix](nix-modules.nix) - `/etc/nixos/nix-modules.nix` - Nix-Gaming Configuration file: enables the nix gaming repo for realtime pipewire
 
 ## How to install
 
