@@ -1,7 +1,8 @@
 { config, ... }:
 
 {
-  # Kernel parameters for low-latency - check https://wiki.archlinux.org/title/Gaming#Improving_Performance for explanations
+  # Kernel parameters for low-latency
+  # check https://wiki.archlinux.org/title/Gaming#Improving_Performance for explanations
   environment.etc = {
     "tmpfiles.d/gaming.conf" = {
       text = ''
@@ -28,10 +29,19 @@
 
   # Kernel parameters for low internet latency
   environment.etc = {
-    "sysctl.d/99-networking.conf" = {
+    "sysctl.d/99-gaming.conf" = {
       text = ''
         net.core.default_qdisc = cake
         net.ipv4.tcp_congestion_control = bbr
+        net.ipv4.tcp_fastopen = 3
+        net.ipv4.tcp_slow_start_after_idle = 0
+        net.ipv4.tcp_keepalive_time = 60
+        net.ipv4.tcp_keepalive_intvl = 10
+        net.ipv4.tcp_keepalive_probes = 6
+        net.ipv4.tcp_mtu_probing = 1
+        net.ipv4.tcp_sack = 1
+        net.ipv4.tcp_fin_timeout = 5
+        vm.max_map_count = 2147483642
       '';
     };
   };
@@ -39,5 +49,30 @@
   # Load TCP_BBR module
   boot.kernelModules = [
     "tcp_bbr"
-  ];  
+  ];
+
+  # Limit keyboard polling
+  boot.extraModprobeConfig = ''
+    options usbhid kbpoll=8
+    options usbhid mousepoll=1
+  '';
+
+  # Disable Mouse Debounce
+  environment.etc = {
+    "libinput/local-overrides.quirks" = {
+      text = ''
+        [Never Debounce]
+        MatchUdevType=mouse
+        ModelBouncingKeys=1
+      '';
+    };
+  };
+
+  # Allow lamzu.net Software to run
+  services.udev.extraRules = ''
+    SUBSYSTEM=="hidraw", ATTRS{idVendor}=="373e", ATTRS{idProduct}=="001c", TAG+="uaccess"
+    SUBSYSTEM=="usb", ATTRS{idVendor}=="373e", ATTRS{idProduct}=="001c", TAG+="uaccess"
+    SUBSYSTEM=="hidraw", ATTRS{idVendor}=="373e", ATTRS{idProduct}=="001e", TAG+="uaccess"
+    SUBSYSTEM=="usb", ATTRS{idVendor}=="373e", ATTRS{idProduct}=="001e", TAG+="uaccess"
+  '';
 }

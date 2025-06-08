@@ -6,13 +6,15 @@ This is my configuration for NixOS. It works well for me but you can change anyt
 
 ## Contents
 
-### hardware-configuration.nix not included, it should be created upon install (instead of using mine ofc)
+### hardware-configuration.nix not included, it should be created upon install instead
 
 - [Configuration.nix](configuration.nix) - `/etc/nixos/configuration.nix` - Main configuration file: handles stuff such as bootloader information and kernel version
-- [ZRAM.nix](zram.nix) - `/etc/nixos/zram.nix` - zram configuration file: handles ssd trimming and creates 2 zstd-compressed swap devices that equal the amount of system memory
-- [AMD.nix](amd.nix) - `/etc/nixos/amd.nix` - NVIDIA Driver Configuration file: handles power management and my tweaks for optimal latency
-- [Gaming.nix](gaming.nix) - `/etc/nixos/gaming.nix` - Gaming Configuration file: handles sysctl values and other QOL improvements for a smooth gaming experience
-- [Lomiri.nix](lomiri.nix) - `/etc/nixos/lomiri.nix` - I like experimental stuff what can I say
+- [cloudflared.nix](cloudflared.nix) - `/etc/nixos/cloudflared.nix` - Cloudflare Proxy configuration file: applies my personal NextDNS server
+- [AMD.nix](amd.nix) - `/etc/nixos/amd.nix` - AMD Driver Configuration file: enables the amd driver and rocm
+- [gaming.nix](gaming.nix) - `/etc/nixos/gaming.nix` - Gaming Configuration file: handles sysctl values and other QOL improvements for a smooth gaming experience
+- [plasma.nix](plasma.nix) - `/etc/nixos/plasma.nix` - KDE Plasma 6 Configuration file: removes bloat and makes sddm use wayland
+- [flake.nix](flake.nix) - `/etc/nixos/flake.nix` - Flake Configuration file: flakes (Flake) (Flakes) Flake
+- [nix-gaming.nix](nix-gaming.nix) - `/etc/nixos/nix-gaming.nix` - Nix-Gaming Configuration file: enables the nix gaming repo for realtime pipewire
 
 ## How to install
 
@@ -20,4 +22,5 @@ This is my configuration for NixOS. It works well for me but you can change anyt
 git clone https://github.com/thedeveloperever/nix-configuration.git
 cd nix-configuration
 sudo cp *.nix /etc/nixos/
+sudo nixos-rebuild switch --upgrade
 ```
